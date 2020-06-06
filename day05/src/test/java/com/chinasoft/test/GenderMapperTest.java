@@ -18,5 +18,6 @@ public class GenderMapperTest {
 		Gender gender=mapper.getGender(1);
 		System.out.print(gender);
 		session.close();
+                System.out.print(8888);
 	}
 }
