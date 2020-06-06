@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinasoft.mapper.UserMapper">
+	<!--动态插入user -->
+
+	<insert id="addUser" parameterType="user">
+
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="id != null and username !=null">
+				username,
+			</if>
+			<if test="id != null and username !=null and password!=null">
+				password,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="id != null and username !=null">
+				#{username},
+			</if>
+			<if test="id != null and username !=null and password!=null">
+				#{password},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 分页查询 -->
+	<select id="selectByPage" parameterType="map" resultType="user">
+		select * from student limit #{currIndex} , #{pageSize}
+	</select>
+
+
+</mapper>

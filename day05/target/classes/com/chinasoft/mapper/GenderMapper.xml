@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinasoft.mapper.GenderMapper">
+
+	<!-- <select id="getGender" resultMap="teacherStu"> select gender.id,gender.c_name,gender.c_teacher,student.id,student.username, 
+		student.password,student.phone, student.address,student.email,student.c_id 
+		from student,gender where student.c_id = gender.id and gender.id =#{id} </select> 
+		<resultMap id="teacherStu" type="gender"> <id column="id" property="id" /> 
+		<result column="c_name" property="name" /> <result column="c_teacher" property="teacher" 
+		/> <collection property="students" ofType="student"> <result column="username" 
+		property="user" /> <result column="password" property="pwd" /> <result column="c_id" 
+		property="cid" /> <result column="phone" property="phone" /> <result column="address" 
+		property="address" /> <result column="email" property="email" /> </collection> 
+		</resultMap> -->
+
+	<select id="getGender" resultMap="teacherStu">
+		select * from gender where id =
+		#{id}
+	</select>
+	<resultMap id="teacherStu" type="gender">
+		<id property="id" column="id" />
+		<result column="c_name" property="name" />
+		<result column="c_teacher" property="teacher" />
+		<collection property="students" javaType="list"
+			ofType="student" select="getStudentByTid" column="id">
+		</collection>
+	</resultMap>
+
+
+	<select id="getStudentByTid" resultType="student"
+		resultMap="Stu">
+		select * from student
+		where c_id = #{id}
+	</select>
+	<resultMap id="Stu" type="student">
+		<id property="id" column="id" />
+		<result column="username" property="user" />
+		<result column="password" property="pwd" />
+		<result column="c_id" property="cid" />
+		<result column="phone" property="phone" />
+		<result column="address" property="address" />
+		<result column="email" property="email" />
+	</resultMap>
+
+</mapper>
